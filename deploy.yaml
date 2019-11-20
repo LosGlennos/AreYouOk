@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: areyouok
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: areyouok
+  template:
+    metadata:
+      labels:
+        app: areyouok
+    spec:
+      containers:
+      - name: areyouok
+        image: areyouok:latest
+        ports:
+          - containerPort: 30010
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: areyouok
+spec:
+  ports:
+  - port: 30010
+    protocol: TCP
+    targetPort: 30010
+  selector:
+    app: areyouok
+  type: ClusterIP

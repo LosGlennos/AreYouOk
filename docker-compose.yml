@@ -1,0 +1,11 @@
+# docker-compose version 
+version: '3'
+
+services:
+
+  areyouok:
+    container_name: areyouok
+    image: areyouok:latest
+    restart: always
+    ports:
+      - "127.0.0.1:30010:80"

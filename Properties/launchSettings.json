@@ -1,0 +1,35 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:9320",
+      "sslPort": 44384
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:30011",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "HEALTH_POLL_RATE_SECONDS": "10",
+        "DB_PROVIDER": "postgres",
+        "DB_CONNECTION_STRING": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=areyouok;"
+      }
+    },
+    "AreYouOk": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:30011",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "HEALTH_POLL_RATE_SECONDS": "10",
+        "DB_PROVIDER": "postgres",
+        "DB_CONNECTION_STRING": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=areyouok;",
+        "HEALTH_ENDPOINTS": "https://gpe-dev.volvocars.biz/pretax/health https://gpe-dev.volvocars.biz/price/health"
+      }
+    }
+  }
+}
