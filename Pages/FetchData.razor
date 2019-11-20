@@ -1,13 +1,14 @@
 ﻿@page "/fetchdata"
 
 @using AreYouOk.Data
-@inject WeatherForecastService ForecastService
+@using AreYouOk.Database.Models
+@inject HealthService HealthService
 
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
 
-@if (forecasts == null)
+@if (health == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -17,19 +18,13 @@ else
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var healthEntry in health)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@healthEntry.Timestamp</td>
                 </tr>
             }
         </tbody>
@@ -37,10 +32,10 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private List<HealthModel> health;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        health = (await Task.FromResult(HealthService.GetHealth())).ToList();
     }
 }

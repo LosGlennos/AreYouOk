@@ -1,6 +1,4 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using AreYouOk.Database.Models;
 using AreYouOk.Database.Repositories;
 
@@ -15,9 +13,9 @@ namespace AreYouOk.Data
             _repository = repository;
         }
 
-        public Task<HealthModel[]> GetHealthAsync()
+        public IEnumerable<HealthModel> GetHealth()
         {
-            _repository.GetHealth();
+            return _repository.GetHealth();
         }
     }
 }

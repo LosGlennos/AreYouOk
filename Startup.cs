@@ -26,7 +26,7 @@ namespace AreYouOk
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.ConfigureDatabase(Configuration["DB_CONNECTION_STRING"], Configuration["DB_PROVIDER"]);
-            services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<HealthService>();
             services.AddHostedService<HealthPollingService>();
         }
 
