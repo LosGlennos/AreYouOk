@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: areyouok
-        image: areyouok:latest
+        image: martinfylke/areyouok:latest
         ports:
-          - containerPort: 30010
+          - containerPort: 80
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Production"
@@ -39,7 +39,7 @@ spec:
   ports:
   - port: 30010
     protocol: TCP
-    targetPort: 30010
+    targetPort: 80
   selector:
     app: areyouok
-  type: ClusterIP
+  type: LoadBalancer
