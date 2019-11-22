@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AreYouOk.Database.Models;
@@ -21,6 +22,12 @@ namespace AreYouOk.Data
 
         public async Task<HealthModel> AddHealthResponse(bool isSuccess, int statusCode, int elapsedMilliseconds, string url) {
             return await _repository.AddHealthResponse(isSuccess, statusCode, elapsedMilliseconds, url);
+        }
+
+        public async Task DeleteLogsOlderThanDays(int days)
+        {
+            var date = DateTime.UtcNow.AddDays(-days);
+            await _repository.DeleteLogsOlderBeforeDate(date);
         }
     }
 }

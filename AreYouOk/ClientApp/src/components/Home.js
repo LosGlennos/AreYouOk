@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { HubConnectionBuilder } from '@aspnet/signalr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faCross, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { Tooltip } from 'reactstrap';
 import moment from 'moment';
 
@@ -103,7 +103,7 @@ function EndpointOperational(props) {
   if (props.success) {
     return <span className="text-success"><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon> Operational</span>
   } else {
-    return <span className="text-danger"><FontAwesomeIcon icon={faCross}></FontAwesomeIcon> Not operational</span>
+    return <span className="text-danger"><FontAwesomeIcon icon={faTimes}></FontAwesomeIcon> Not operational</span>
   }
 }
 

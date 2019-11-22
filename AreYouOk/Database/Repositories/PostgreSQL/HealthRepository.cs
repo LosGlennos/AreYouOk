@@ -34,14 +34,16 @@ namespace AreYouOk.Database.Repositories.PostgreSQL
 
         public IEnumerable<HealthModel> GetLatestHealthForDistinctEndpoints()
         {
-            var healthList = new List<HealthModel>();
             var urls = _dataContext.HealthData.ToList().GroupBy(x => x.Url);
-            foreach (var url in urls)
-            {
-                healthList.Add(url.OrderByDescending(x => x.Timestamp).First());
-            }
 
-            return healthList;
+            return urls.Select(url => url.OrderByDescending(x => x.Timestamp).FirstOrDefault()).ToList();
+        }
+
+        public async Task DeleteLogsOlderBeforeDate(DateTime date)
+        {
+            var oldData = _dataContext.HealthData.Where(x => x.Timestamp < date).ToList();
+            _dataContext.HealthData.RemoveRange(oldData);
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

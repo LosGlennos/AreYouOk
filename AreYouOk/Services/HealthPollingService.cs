@@ -57,6 +57,8 @@ namespace AreYouOk.Services
                 {
                     var healthModel = await service.AddHealthResponse(isSuccess, statusCode, elapsedMilliseconds, url);
                     await hub.SendHealth(healthModel);
+                    var retentionDays = Convert.ToInt32(_configuration["DATA_RETENTION_DAYS"]);
+                    await service.DeleteLogsOlderThanDays(retentionDays);
                 }
                 catch (Exception e)
                 {
