@@ -2450,11 +2450,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\dev\\foo\\AreYouOk\\AreYouOk\\AreYouOk\\AreYouOk.csproj",
+      "projectUniqueName": "C:\\dev\\AreYouOk\\AreYouOk\\AreYouOk.csproj",
       "projectName": "AreYouOk",
-      "projectPath": "C:\\dev\\foo\\AreYouOk\\AreYouOk\\AreYouOk\\AreYouOk.csproj",
+      "projectPath": "C:\\dev\\AreYouOk\\AreYouOk\\AreYouOk.csproj",
       "packagesPath": "C:\\Users\\msvens71\\.nuget\\packages\\",
-      "outputPath": "C:\\dev\\foo\\AreYouOk\\AreYouOk\\AreYouOk\\obj\\",
+      "outputPath": "C:\\dev\\AreYouOk\\AreYouOk\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
