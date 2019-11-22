@@ -4,6 +4,7 @@ using AreYouOk.Hubs;
 using AreYouOk.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,17 +24,25 @@ namespace AreYouOk
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<HealthPollingService>();
-            services.AddRazorPages();
             services.ConfigureDatabase(Configuration["DB_CONNECTION_STRING"], Configuration["DB_PROVIDER"]);
             services.AddScoped<HealthService>();
             services.AddSingleton<HealthHub>();
             services.AddHostedService<HealthPollingService>();
             services.AddSignalR();
+
+            services.AddControllersWithViews();
+
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.MigrateDatabase(Configuration["DB_PROVIDER"]);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -47,6 +56,7 @@ namespace AreYouOk
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseRouting();
 
@@ -54,8 +64,21 @@ namespace AreYouOk
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+
                 endpoints.MapHub<HealthHub>("/healthhub");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
             });
         }
     }

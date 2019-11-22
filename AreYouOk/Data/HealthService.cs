@@ -14,9 +14,9 @@ namespace AreYouOk.Data
             _repository = repository;
         }
 
-        public IEnumerable<HealthModel> GetHealth()
+        public IEnumerable<HealthModel> GetLatestHealth()
         {
-            return _repository.GetHealth();
+            return _repository.GetLatestHealthForDistinctEndpoints();
         }
 
         public async Task<HealthModel> AddHealthResponse(bool isSuccess, int statusCode, int elapsedMilliseconds, string url) {

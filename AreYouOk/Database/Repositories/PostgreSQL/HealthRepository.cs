@@ -14,13 +14,13 @@ namespace AreYouOk.Database.Repositories.PostgreSQL
         {
             _dataContext = dataContext;
         }
-        public async Task<HealthModel> AddHealthResponse(bool successfull, int statusCode, int elapsedMilliseconds, string url)
+        public async Task<HealthModel> AddHealthResponse(bool success, int statusCode, int elapsedMilliseconds, string url)
         {
             var healthModel = new HealthModel
             {
                 ElapsedMilliseconds = elapsedMilliseconds,
                 StatusCode = statusCode,
-                Success = successfull,
+                Success = success,
                 Timestamp = DateTime.UtcNow,
                 Url = url
             };
@@ -32,9 +32,16 @@ namespace AreYouOk.Database.Repositories.PostgreSQL
             return healthModel;
         }
 
-        public IEnumerable<HealthModel> GetHealth()
+        public IEnumerable<HealthModel> GetLatestHealthForDistinctEndpoints()
         {
-            return _dataContext.HealthData.ToList();
+            var healthList = new List<HealthModel>();
+            var urls = _dataContext.HealthData.ToList().GroupBy(x => x.Url);
+            foreach (var url in urls)
+            {
+                healthList.Add(url.OrderByDescending(x => x.Timestamp).First());
+            }
+
+            return healthList;
         }
     }
 }
