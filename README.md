@@ -3,6 +3,8 @@ A health polling service with a status page for your application.
 
 Will poll endpoints and look for a successfull status code 2xx.
 
+![Health](areyouok.png)
+
 ## Installation
 
 `docker pull martinfylke/areyouok`
