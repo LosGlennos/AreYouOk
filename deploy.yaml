@@ -23,11 +23,11 @@ spec:
         - name: HEALTH_POLL_RATE_SECONDS
           value: "60"
         - name: DB_PROVIDER
-          value: "postgres"
+          value: "{YourDbProvider}"
         - name: DB_CONNECTION_STRING
-          value: "User ID=postgres;Password=postgres;Host=postgresql;Port=5432;Database=areyouok;"
+          value: "{YourDbConnectionString}"
         - name: HEALTH_ENDPOINTS
-          value: "https://gpe-dev.volvocars.biz/pretax/health https://gpe-dev.volvocars.biz/price/health"
+          value: "{YourEndpoint1} {YourEndpoint2}"
         - name: DATA_RETENTION_DAYS
           value: "30"
 ---
