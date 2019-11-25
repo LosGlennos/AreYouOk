@@ -5,6 +5,8 @@ Will poll endpoints and look for a successfull status code 2xx.
 
 ## Installation
 
+`docker pull martinfylke/areyouok`
+
 ### Database
 This application does not host, nor will create a database for you.
 You'll have to create the actual database, while the application handles the migrations and the data in the database.
