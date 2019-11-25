@@ -19,7 +19,7 @@
         "DB_CONNECTION_STRING": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=areyouok;"
       }
     },
-    "AreYouOk": {
+    "postgres": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "http://localhost:30011",
@@ -29,7 +29,20 @@
         "DB_PROVIDER": "postgres",
         "DB_CONNECTION_STRING": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=areyouok;",
         "HEALTH_ENDPOINTS": "https://gpe-dev.volvocars.biz/pretax/health https://gpe-dev.volvocars.biz/price/health",
-        "DATA_RETENTION_DAYS": "1" 
+        "DATA_RETENTION_DAYS": "1"
+      }
+    },
+    "mongodb": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:30011",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "HEALTH_POLL_RATE_SECONDS": "60",
+        "DB_PROVIDER": "mongodb",
+        "DB_CONNECTION_STRING": "mongodb://localhost:27017/areyouok",
+        "HEALTH_ENDPOINTS": "https://gpe-dev.volvocars.biz/pretax/health https://gpe-dev.volvocars.biz/price/health",
+        "DATA_RETENTION_DAYS": "1"
       }
     }
   }

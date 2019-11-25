@@ -47,7 +47,8 @@ namespace AreYouOk.Configuration
 
         private static void ConfigureMongo(IServiceCollection services, string dbConnectionString)
         {
-            throw new NotImplementedException();
+            services.AddSingleton(new Database.Repositories.MongoDB.DataContext(dbConnectionString));
+            services.AddScoped<IHealthRepository, Database.Repositories.MongoDB.HealthRepository>();
         }
 
         private static void ConfigureMssql(IServiceCollection services, string dbConnectionString)
@@ -87,7 +88,13 @@ namespace AreYouOk.Configuration
         }
         private static IApplicationBuilder MigrateMongo(IApplicationBuilder app)
         {
-            throw new NotImplementedException();
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var database = scope.ServiceProvider.GetRequiredService<Database.Repositories.MongoDB.DataContext>();
+                database.Migrate();
+            }
+
+            return app;
         }
         private static IApplicationBuilder MigrateMssql(IApplicationBuilder app)
         {

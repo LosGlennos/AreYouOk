@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { HubConnectionBuilder } from '@aspnet/signalr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { Tooltip } from 'reactstrap';
+import { Tooltip, Toast, ToastBody, ToastHeader } from 'reactstrap';
 import moment from 'moment';
 
 export class Home extends Component {
@@ -14,7 +14,9 @@ export class Home extends Component {
     this.state = {
       hubConnection: null,
       healthStatuses: [],
-      tooltipOpen: []
+      tooltipOpen: [],
+      showToast: false,
+      updateUrl: ''
     }
   }
   
@@ -63,7 +65,8 @@ export class Home extends Component {
     var healthStatuses = this.state.healthStatuses;
     for (var i = 0; i < healthStatuses.length; i++) {
       if (healthStatuses[i].url === url) {
-        healthStatuses = {
+        healthStatuses[i] = {
+          url: url,
           success: success, 
           timestamp: timestamp
         };
