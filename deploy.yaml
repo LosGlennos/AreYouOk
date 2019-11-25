@@ -18,8 +18,6 @@ spec:
         ports:
           - containerPort: 80
         env:
-        - name: ASPNETCORE_ENVIRONMENT
-          value: "Production"
         - name: HEALTH_POLL_RATE_SECONDS
           value: "60"
         - name: DB_PROVIDER

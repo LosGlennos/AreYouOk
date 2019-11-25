@@ -20,7 +20,6 @@ The application supports MSSQL, MongoDB and PostgreSQL. If any other Database pr
 ### Environment variables
 | Env. variable | Explanation | Example value |
 |---|---|---|
-|ASPNETCORE_ENVIRONMENT|The environment setting for the application|"Production"/"Development"|
 |HEALTH_POLL_RATE_SECONDS| The rate at which you want to poll the health endpoint, in seconds| "60"|
 |DB_PROVIDER|The database provider| "mssql"/"postgres"/"mongodb"|
 |DB_CONNECTION_STRING| The connection string to your database.| "http://localhost:2017/areyouok"|
