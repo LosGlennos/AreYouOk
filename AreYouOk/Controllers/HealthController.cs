@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AreYouOk.Data;
 using AreYouOk.Database.Models;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace AreYouOk.Controllers
 {
@@ -10,20 +13,32 @@ namespace AreYouOk.Controllers
     public class HealthController
     {
         private readonly HealthService _service;
+        private readonly ILogger _logger;
 
-        public HealthController(HealthService service)
+        public HealthController(HealthService service, ILogger logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         [HttpGet("latest")]
-        public IEnumerable<HealthModel> GetLatest()
+        public IEnumerable<LatestHealthDTO> GetLatest()
         {
-            return _service.GetLatestHealth();
+            var health = _service.GetLatestHealth();
+
+            return health.Select(x => new LatestHealthDTO
+            {
+                Success = x.Success,
+                Timestamp = x.Timestamp,
+                Url = x.Url
+            });
         }
     }
 
-    public class HealthDTO
+    public class LatestHealthDTO
     {
+        public DateTime Timestamp { get; set; }
+        public bool Success { get; set; }
+        public string Url { get; set; }
     }
 }
