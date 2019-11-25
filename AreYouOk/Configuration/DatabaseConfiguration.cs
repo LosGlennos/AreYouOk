@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using AreYouOk.Database.Migrations;
 using AreYouOk.Database.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +31,7 @@ namespace AreYouOk.Configuration
 
         private static IServiceCollection ConfigurePostgres(IServiceCollection services, string dbConnectionString)
         {
-            var assembly = Assembly.GetAssembly(typeof(Initial));
+            var assembly = Assembly.GetAssembly(typeof(Database.Repositories.PostgreSQL.Migrations.Initial));
             var assemblyString = assembly.ToString();
             services
                  .AddEntityFrameworkNpgsql()
@@ -51,9 +50,18 @@ namespace AreYouOk.Configuration
             services.AddScoped<IHealthRepository, Database.Repositories.MongoDB.HealthRepository>();
         }
 
-        private static void ConfigureMssql(IServiceCollection services, string dbConnectionString)
+        private static IServiceCollection ConfigureMssql(IServiceCollection services, string dbConnectionString)
         {
-            throw new NotImplementedException();
+            var assembly = Assembly.GetAssembly(typeof(Database.Repositories.MSSQL.Migrations.Initial));
+            var assemblyString = assembly.ToString();
+
+            services
+                .AddDbContext<Database.Repositories.MSSQL.DataContext>(
+                    options => options.UseSqlServer(dbConnectionString, 
+                        optionsAction => optionsAction.MigrationsAssembly(assemblyString)));
+
+            services.AddScoped<IHealthRepository, Database.Repositories.MSSQL.HealthRepository>();
+            return services;
         }
 
         public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder app, string provider)
@@ -98,7 +106,13 @@ namespace AreYouOk.Configuration
         }
         private static IApplicationBuilder MigrateMssql(IApplicationBuilder app)
         {
-            throw new NotImplementedException();
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var database = scope.ServiceProvider.GetRequiredService<Database.Repositories.MSSQL.DataContext>().Database;
+                database.Migrate();
+            }
+
+            return app;
         }
     }
 }

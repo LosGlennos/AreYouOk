@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace AreYouOk.Database.Migrations
+namespace AreYouOk.Database.Repositories.PostgreSQL.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20191121104450_Initial")]

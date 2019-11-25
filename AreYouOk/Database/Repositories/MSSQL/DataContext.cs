@@ -1,7 +1,7 @@
-using AreYouOk.Database.Models;
+﻿using AreYouOk.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AreYouOk.Database.Repositories.PostgreSQL
+namespace AreYouOk.Database.Repositories.MSSQL
 {
     public class DataContext : DbContext
     {

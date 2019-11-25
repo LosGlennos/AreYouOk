@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AreYouOk.Database.Migrations
+namespace AreYouOk.Database.Repositories.PostgreSQL.Migrations
 {
     public partial class Initial : Migration
     {
