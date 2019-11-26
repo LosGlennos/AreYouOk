@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { HubConnectionBuilder } from '@aspnet/signalr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { Tooltip, Toast, ToastBody, ToastHeader } from 'reactstrap';
+import { Tooltip } from 'reactstrap';
 import moment from 'moment';
 
 export class Home extends Component {
@@ -86,7 +86,7 @@ export class Home extends Component {
         <AllOperational health={this.state.healthStatuses}></AllOperational>
         <ul style={{paddingInlineStart: 0}}>
         {this.state.healthStatuses.map((health, index) => 
-          <li className="list-group-item d-flex justify-content-between align-items-center">
+          <li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
             <span>{health.url}
             <FontAwesomeIcon style={{marginLeft: 5 + 'px'}}icon={faInfoCircle} id={"TooltipExample" + index}></FontAwesomeIcon>
             <Tooltip placement="right" isOpen={this.state.tooltipOpen[index]} target={"TooltipExample" + index} toggle={() => this.toggle(index)}>

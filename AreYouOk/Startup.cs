@@ -1,13 +1,16 @@
 using AreYouOk.Configuration;
-using AreYouOk.Data;
-using AreYouOk.Hubs;
 using AreYouOk.Services;
+using Core;
+using Core.InboundPorts;
+using Core.OutboundPorts.Notifications;
+using Core.OutboundPorts.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SignalR.Hubs;
 
 namespace AreYouOk
 {
@@ -26,7 +29,7 @@ namespace AreYouOk
             services.AddHttpClient<HealthPollingService>();
             services.ConfigureDatabase(Configuration["DB_CONNECTION_STRING"], Configuration["DB_PROVIDER"]);
             services.AddScoped<HealthService>();
-            services.AddSingleton<HealthHub>();
+            services.AddScoped<IHealthNotification, SignalRHealthNotification>();
             services.AddHostedService<HealthPollingService>();
             services.AddSignalR();
 

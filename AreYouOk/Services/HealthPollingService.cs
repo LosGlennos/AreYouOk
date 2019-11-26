@@ -3,9 +3,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AreYouOk.Data;
-using AreYouOk.Hubs;
-using Microsoft.AspNetCore.Diagnostics;
+using Core.InboundPorts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -49,7 +47,6 @@ namespace AreYouOk.Services
             try
             {
                 var service = scope.ServiceProvider.GetRequiredService<HealthService>();
-                var hub = scope.ServiceProvider.GetRequiredService<HealthHub>();
                 var timer = new Stopwatch();
                 timer.Start();
                 var response = await _client.GetAsync(url);
@@ -60,7 +57,7 @@ namespace AreYouOk.Services
                 var statusCode = (int)response.StatusCode;
 
                 var healthModel = await service.AddHealthResponse(isSuccess, statusCode, elapsedMilliseconds, url);
-                await hub.SendHealth(healthModel);
+                await service.SendHealth(healthModel);
                 var retentionDays = Convert.ToInt32(_configuration["DATA_RETENTION_DAYS"]);
                 await service.DeleteLogsOlderThanDays(retentionDays);
             }

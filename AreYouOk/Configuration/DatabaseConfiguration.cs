@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using AreYouOk.Database.Repositories;
+using Core.OutboundPorts.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,36 +31,36 @@ namespace AreYouOk.Configuration
 
         private static IServiceCollection ConfigurePostgres(IServiceCollection services, string dbConnectionString)
         {
-            var assembly = Assembly.GetAssembly(typeof(Database.Repositories.PostgreSQL.Migrations.Initial));
+            var assembly = Assembly.GetAssembly(typeof(Database.PostgreSQL.Migrations.Initial));
             var assemblyString = assembly.ToString();
             services
                  .AddEntityFrameworkNpgsql()
-                 .AddDbContext<Database.Repositories.PostgreSQL.DataContext>(
+                 .AddDbContext<Database.PostgreSQL.DataContext>(
                      options => options.UseNpgsql(dbConnectionString,
                      optionsAction => optionsAction.MigrationsAssembly(assemblyString))
                          .UseSnakeCaseNamingConvention());
 
-            services.AddScoped<IHealthRepository, Database.Repositories.PostgreSQL.HealthRepository>();
+            services.AddScoped<IHealthRepository, Database.PostgreSQL.HealthRepository>();
             return services;
         }
 
         private static void ConfigureMongo(IServiceCollection services, string dbConnectionString)
         {
-            services.AddSingleton(new Database.Repositories.MongoDB.DataContext(dbConnectionString));
-            services.AddScoped<IHealthRepository, Database.Repositories.MongoDB.HealthRepository>();
+            services.AddSingleton(new Database.MongoDB.DataContext(dbConnectionString));
+            services.AddScoped<IHealthRepository, Database.MongoDB.HealthRepository>();
         }
 
         private static IServiceCollection ConfigureMssql(IServiceCollection services, string dbConnectionString)
         {
-            var assembly = Assembly.GetAssembly(typeof(Database.Repositories.MSSQL.Migrations.Initial));
+            var assembly = Assembly.GetAssembly(typeof(Database.MSSQL.Migrations.Initial));
             var assemblyString = assembly.ToString();
 
             services
-                .AddDbContext<Database.Repositories.MSSQL.DataContext>(
+                .AddDbContext<Database.MSSQL.DataContext>(
                     options => options.UseSqlServer(dbConnectionString, 
                         optionsAction => optionsAction.MigrationsAssembly(assemblyString)));
 
-            services.AddScoped<IHealthRepository, Database.Repositories.MSSQL.HealthRepository>();
+            services.AddScoped<IHealthRepository, Database.MSSQL.HealthRepository>();
             return services;
         }
 
@@ -88,7 +88,7 @@ namespace AreYouOk.Configuration
         {
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var database = scope.ServiceProvider.GetRequiredService<Database.Repositories.PostgreSQL.DataContext>().Database;
+                var database = scope.ServiceProvider.GetRequiredService<Database.PostgreSQL.DataContext>().Database;
                 database.Migrate();
             }
 
@@ -98,7 +98,7 @@ namespace AreYouOk.Configuration
         {
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var database = scope.ServiceProvider.GetRequiredService<Database.Repositories.MongoDB.DataContext>();
+                var database = scope.ServiceProvider.GetRequiredService<Database.MongoDB.DataContext>();
                 database.Migrate();
             }
 
@@ -108,7 +108,7 @@ namespace AreYouOk.Configuration
         {
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var database = scope.ServiceProvider.GetRequiredService<Database.Repositories.MSSQL.DataContext>().Database;
+                var database = scope.ServiceProvider.GetRequiredService<Database.MSSQL.DataContext>().Database;
                 database.Migrate();
             }
 

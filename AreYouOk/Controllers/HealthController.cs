@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AreYouOk.Data;
-using AreYouOk.Database.Models;
+using Core.InboundPorts;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 namespace AreYouOk.Controllers
 {
@@ -13,12 +11,10 @@ namespace AreYouOk.Controllers
     public class HealthController
     {
         private readonly HealthService _service;
-        private readonly ILogger _logger;
 
-        public HealthController(HealthService service, ILogger logger)
+        public HealthController(HealthService service)
         {
             _service = service;
-            _logger = logger;
         }
 
         [HttpGet("latest")]

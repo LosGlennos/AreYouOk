@@ -14,18 +14,18 @@ spec:
     spec:
       containers:
       - name: areyouok
-        image: martinfylke/areyouok:latest
+        image: martinfylke/areyouok:1.0.1
         ports:
           - containerPort: 80
         env:
         - name: HEALTH_POLL_RATE_SECONDS
           value: "60"
         - name: DB_PROVIDER
-          value: "{YourDbProvider}"
+          value: "postgres"
         - name: DB_CONNECTION_STRING
-          value: "{YourDbConnectionString}"
+          value: "User ID=postgres;Password=postgres;Host=postgresql;Port=5432;Database=areyouok;"
         - name: HEALTH_ENDPOINTS
-          value: "{YourEndpoint1} {YourEndpoint2}"
+          value: "endpoint1 endpoint2"
         - name: DATA_RETENTION_DAYS
           value: "30"
 ---
