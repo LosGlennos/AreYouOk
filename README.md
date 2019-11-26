@@ -3,7 +3,7 @@ A health polling service with a status page for your application.
 
 Will poll endpoints and look for a successfull status code 2xx.
 
-![Health](https://raw.githubusercontent.com/losglennos/areyouok/master/areyouok.png)
+![Health](https://i.imgur.com/HKH14jL.png)
 
 ## Installation
 
