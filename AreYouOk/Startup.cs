@@ -1,9 +1,7 @@
 using AreYouOk.Configuration;
 using AreYouOk.Services;
-using Core;
 using Core.InboundPorts;
 using Core.OutboundPorts.Notifications;
-using Core.OutboundPorts.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;

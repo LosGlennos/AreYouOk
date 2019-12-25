@@ -40,14 +40,16 @@ namespace AreYouOk.Configuration
                      optionsAction => optionsAction.MigrationsAssembly(assemblyString))
                          .UseSnakeCaseNamingConvention());
 
-            services.AddScoped<IHealthRepository, Database.PostgreSQL.HealthRepository>();
+            services.AddScoped<IHealthRepository, Database.PostgreSQL.Repositories.HealthRepository>();
+            services.AddScoped<IEndpointsRepository, Database.PostgreSQL.Repositories.EndpointsRepository>();
             return services;
         }
 
         private static void ConfigureMongo(IServiceCollection services, string dbConnectionString)
         {
             services.AddSingleton(new Database.MongoDB.DataContext(dbConnectionString));
-            services.AddScoped<IHealthRepository, Database.MongoDB.HealthRepository>();
+            services.AddScoped<IHealthRepository, Database.MongoDB.Repositories.HealthRepository>();
+            services.AddScoped<IEndpointsRepository, Database.MongoDB.Repositories.EndpointsRepository>();
         }
 
         private static IServiceCollection ConfigureMssql(IServiceCollection services, string dbConnectionString)
@@ -60,7 +62,8 @@ namespace AreYouOk.Configuration
                     options => options.UseSqlServer(dbConnectionString, 
                         optionsAction => optionsAction.MigrationsAssembly(assemblyString)));
 
-            services.AddScoped<IHealthRepository, Database.MSSQL.HealthRepository>();
+            services.AddScoped<IHealthRepository, Database.MSSQL.Repositories.HealthRepository>();
+            services.AddScoped<IEndpointsRepository, Database.MSSQL.Repositories.EndpointsRepository>();
             return services;
         }
 

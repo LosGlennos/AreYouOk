@@ -6,7 +6,7 @@ using Core.OutboundPorts.Repositories;
 using Database.MongoDB.Models;
 using MongoDB.Driver;
 
-namespace Database.MongoDB
+namespace Database.MongoDB.Repositories
 {
     public class HealthRepository : IHealthRepository
     {
@@ -59,20 +59,6 @@ namespace Database.MongoDB
         public async Task DeleteLogsOlderBeforeDate(DateTime date)
         {
             await _context.HealthCollection.DeleteManyAsync(doc => doc.Timestamp < date);
-        }
-
-        public async Task AddEndpoint(string endpoint)
-        {
-            var endpointModel = new EndpointModel { Endpoint = endpoint };
-            
-            await _context.EndpointCollection.InsertOneAsync(endpointModel);
-        }
-
-        public List<string> GetEndpoints()
-        {
-            var endpoints = _context.EndpointCollection.Find(FilterDefinition<Models.EndpointModel>.Empty).ToList();
-
-            return endpoints.Select(endpoint => endpoint.Endpoint).ToList();
         }
     }
 }
