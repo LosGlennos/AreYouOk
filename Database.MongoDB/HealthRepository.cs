@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Models;
 using Core.OutboundPorts.Repositories;
 using Database.MongoDB.Models;
 using MongoDB.Driver;
@@ -18,9 +16,9 @@ namespace Database.MongoDB
             _context = context;
         }
 
-        public async Task<HealthModel> AddHealthResponse(bool success, int statusCode, int elapsedMilliseconds, string url)
+        public async Task<Core.Models.HealthModel> AddHealthResponse(bool success, int statusCode, int elapsedMilliseconds, string url)
         {
-            var healthModel = new MongoHealthModel
+            var healthModel = new Models.HealthModel
             {
                 Success = success,
                 Timestamp = DateTime.UtcNow,
@@ -29,11 +27,11 @@ namespace Database.MongoDB
                 StatusCode = statusCode
             };
 
-            if (_context.HealthCollection == null) 
+            if (_context.HealthCollection == null)
                 throw new NullReferenceException("Database not initialized");
-            
+
             await _context.HealthCollection.InsertOneAsync(healthModel);
-            return new HealthModel
+            return new Core.Models.HealthModel
             {
                 StatusCode = healthModel.StatusCode,
                 ElapsedMilliseconds = healthModel.ElapsedMilliseconds,
@@ -44,11 +42,11 @@ namespace Database.MongoDB
 
         }
 
-        public IEnumerable<HealthModel> GetLatestHealthForDistinctEndpoints()
+        public IEnumerable<Core.Models.HealthModel> GetLatestHealthForDistinctEndpoints()
         {
-            var urls = _context.HealthCollection.Find(FilterDefinition<MongoHealthModel>.Empty).ToList().GroupBy(x => x.Url);
+            var urls = _context.HealthCollection.Find(FilterDefinition<Models.HealthModel>.Empty).ToList().GroupBy(x => x.Url);
 
-            return urls.Select(url => url.OrderByDescending(x => x.Timestamp).FirstOrDefault()).Select(x => new HealthModel
+            return urls.Select(url => url.OrderByDescending(x => x.Timestamp).FirstOrDefault()).Select(x => new Core.Models.HealthModel
             {
                 Url = x.Url,
                 Timestamp = x.Timestamp,
@@ -61,6 +59,20 @@ namespace Database.MongoDB
         public async Task DeleteLogsOlderBeforeDate(DateTime date)
         {
             await _context.HealthCollection.DeleteManyAsync(doc => doc.Timestamp < date);
+        }
+
+        public async Task AddEndpoint(string endpoint)
+        {
+            var endpointModel = new EndpointModel { Endpoint = endpoint };
+            
+            await _context.EndpointCollection.InsertOneAsync(endpointModel);
+        }
+
+        public List<string> GetEndpoints()
+        {
+            var endpoints = _context.EndpointCollection.Find(FilterDefinition<Models.EndpointModel>.Empty).ToList();
+
+            return endpoints.Select(endpoint => endpoint.Endpoint).ToList();
         }
     }
 }

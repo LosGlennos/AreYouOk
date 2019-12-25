@@ -6,6 +6,7 @@ namespace Database.MSSQL
     public class DataContext : DbContext
     {
         public DbSet<HealthModel> HealthData { get; set; }
+        public DbSet<EndpointModel> Endpoints { get; set; }
         public DataContext(DbContextOptions<DataContext> dbContextOptions) : base(dbContextOptions)
         {
         }

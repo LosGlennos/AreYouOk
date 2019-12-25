@@ -9,5 +9,7 @@ namespace Core.OutboundPorts.Repositories
         Task<HealthModel> AddHealthResponse(bool success, int statusCode, int elapsedMilliseconds, string url);
         IEnumerable<HealthModel> GetLatestHealthForDistinctEndpoints();
         Task DeleteLogsOlderBeforeDate(DateTime date);
+        Task AddEndpoint(string endpoint);
+        List<string> GetEndpoints();
     }
 }

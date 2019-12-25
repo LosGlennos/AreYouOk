@@ -1,4 +1,6 @@
-﻿using Database.MongoDB.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Database.MongoDB.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -7,7 +9,8 @@ namespace Database.MongoDB
     public class DataContext
     {
         private readonly string _connectionString;
-        public IMongoCollection<MongoHealthModel> HealthCollection { get; private set; }
+        public IMongoCollection<HealthModel> HealthCollection { get; private set; }
+        public IMongoCollection<EndpointModel> EndpointCollection {get; private set;}
         
         public DataContext(string connectionString)
         {
@@ -22,16 +25,22 @@ namespace Database.MongoDB
 
             var client = new MongoClient(url);
             var database = client.GetDatabase(databaseName);
+            
+            var healthCollectionName = "health_data";
+            var endpointsCollectionName = "endpoints";
+            var collections = new List<string>{healthCollectionName, endpointsCollectionName};
 
-            const string collectionName = "health_data";
-
-            var exists = database.ListCollections(new ListCollectionsOptions {Filter = new BsonDocument("name", collectionName)}).Any();
-            if (!exists)
+            collections.ForEach(collection => 
             {
-                database.CreateCollection(collectionName);
-            }
+                var exists = database.ListCollections(new ListCollectionsOptions {Filter = new BsonDocument("name", collection)}).Any();
+                if (!exists)
+                {
+                    database.CreateCollection(collection);
+                }
+            });
 
-            HealthCollection = database.GetCollection<MongoHealthModel>(collectionName);
+            HealthCollection = database.GetCollection<HealthModel>(healthCollectionName);
+            EndpointCollection = database.GetCollection<EndpointModel>(endpointsCollectionName);
         }
     }
 }

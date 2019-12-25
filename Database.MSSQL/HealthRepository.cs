@@ -61,5 +61,17 @@ namespace Database.MSSQL
             _dataContext.HealthData.RemoveRange(oldData);
             await _dataContext.SaveChangesAsync();
         }
+
+        public async Task AddEndpoint(string endpoint)
+        {
+            var endpointModel = new EndpointModel { Endpoint = endpoint };
+            _dataContext.Add(endpointModel);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public List<string> GetEndpoints()
+        {
+            return _dataContext.Endpoints.Select(x => x.Endpoint).ToList();
+        }
     }
 }
