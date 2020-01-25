@@ -8,7 +8,7 @@ namespace AreYouOk.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class HealthController
+    public class HealthController : ControllerBase
     {
         private readonly HealthService _service;
 
@@ -18,16 +18,16 @@ namespace AreYouOk.Controllers
         }
 
         [HttpGet("latest")]
-        public IEnumerable<LatestHealthDTO> GetLatest()
+        public IActionResult GetLatest()
         {
             var health = _service.GetLatestHealth();
 
-            return health.Select(x => new LatestHealthDTO
+            return Ok(health.Select(x => new LatestHealthDTO
             {
                 Success = x.Success,
                 Timestamp = x.Timestamp,
                 Url = x.Url
-            });
+            }));
         }
     }
 
