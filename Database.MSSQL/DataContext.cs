@@ -1,5 +1,6 @@
 ﻿using Database.MSSQL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Database.MSSQL
 {
@@ -14,6 +15,19 @@ namespace Database.MSSQL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HealthModel>().HasKey(h => h.Timestamp);
+            modelBuilder.Entity<EndpointModel>().HasNoKey();
+        }
+    }
+
+    public class DataContextFactory : IDesignTimeDbContextFactory<DataContext>
+    {
+        public DataContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
+            optionsBuilder.UseSqlServer("Data Source=localhost,1433;Initial Catalog=areyouok;User Id=sa;Password=password123;");
+            optionsBuilder.UseSnakeCaseNamingConvention();
+
+            return new DataContext(optionsBuilder.Options);
         }
     }
 }
