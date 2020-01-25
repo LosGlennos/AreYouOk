@@ -1,5 +1,6 @@
 using Database.PostgreSQL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Database.PostgreSQL
 {
@@ -14,6 +15,19 @@ namespace Database.PostgreSQL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HealthModel>().HasKey(h => h.Timestamp);
+            modelBuilder.Entity<EndpointModel>().HasNoKey();
+        }
+    }
+
+    public class DataContextFactory : IDesignTimeDbContextFactory<DataContext>
+    {
+        public DataContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
+            optionsBuilder.UseNpgsql("User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=areyouok;");
+            optionsBuilder.UseSnakeCaseNamingConvention();
+
+            return new DataContext(optionsBuilder.Options);
         }
     }
 }
