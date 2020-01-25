@@ -27,7 +27,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "HEALTH_POLL_RATE_SECONDS": "60",
         "DB_PROVIDER": "postgres",
-        "DB_CONNECTION_STRING": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=areyouok;",
+        "DB_CONNECTION_STRING": "User ID=postgres;Password=docker;Host=localhost;Port=5432;Database=areyouok;",
         "DATA_RETENTION_DAYS": "1"
       }
     },
@@ -51,7 +51,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "HEALTH_POLL_RATE_SECONDS": "60",
         "DB_PROVIDER": "mssql",
-        "DB_CONNECTION_STRING": "Data Source=localhost,1433;Initial Catalog=areyouok;User Id=sa;Password=password123;",
+        "DB_CONNECTION_STRING": "Data Source=localhost,1433;Initial Catalog=areyouok;User Id=sa;Password=password123!;",
         "DATA_RETENTION_DAYS": "1"
       }
     }

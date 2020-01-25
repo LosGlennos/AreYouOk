@@ -27,6 +27,7 @@ namespace AreYouOk.Services
         }
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
+            await Task.Delay(1000);
             using var scope = _services.CreateScope();
             var endpointsService = scope.ServiceProvider.GetRequiredService<EndpointsService>();
             var urls = endpointsService.GetEndpoints();

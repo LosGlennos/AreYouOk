@@ -24,9 +24,10 @@ namespace AreYouOk
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient<HealthPollingService>();
             services.ConfigureDatabase(Configuration["DB_CONNECTION_STRING"], Configuration["DB_PROVIDER"]);
+            services.AddHttpClient<HealthPollingService>();
             services.AddScoped<HealthService>();
+            services.AddScoped<EndpointsService>();
             services.AddScoped<IHealthNotification, SignalRHealthNotification>();
             services.AddHostedService<HealthPollingService>();
             services.AddSignalR();

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.MSSQL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200125200731_AddedEndpoints")]
-    partial class AddedEndpoints
+    [Migration("20200125205809_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,38 +24,31 @@ namespace Database.MSSQL.Migrations
             modelBuilder.Entity("Database.MSSQL.Models.EndpointModel", b =>
                 {
                     b.Property<string>("Endpoint")
-                        .HasColumnName("endpoint")
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("endpoints");
+                    b.ToTable("Endpoints");
                 });
 
             modelBuilder.Entity("Database.MSSQL.Models.HealthModel", b =>
                 {
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ElapsedMilliseconds")
-                        .HasColumnName("elapsed_milliseconds")
                         .HasColumnType("int");
 
                     b.Property<int>("StatusCode")
-                        .HasColumnName("status_code")
                         .HasColumnType("int");
 
                     b.Property<bool>("Success")
-                        .HasColumnName("success")
                         .HasColumnType("bit");
 
                     b.Property<string>("Url")
-                        .HasColumnName("url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Timestamp")
-                        .HasName("pk_health_data");
+                    b.HasKey("Timestamp");
 
-                    b.ToTable("health_data");
+                    b.ToTable("HealthData");
                 });
 #pragma warning restore 612, 618
         }

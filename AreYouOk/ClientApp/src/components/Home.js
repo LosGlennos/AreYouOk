@@ -19,7 +19,7 @@ export class Home extends Component {
       updateUrl: ''
     }
   }
-  
+
   componentWillMount = () => {
     this.fetchLatestStatus().then(() => {
       console.log('got latest health status');
@@ -29,17 +29,17 @@ export class Home extends Component {
   async fetchLatestStatus() {
     const response = await fetch('health/latest');
     const healthStatuses = await response.json();
-    for(var i = 0; i < healthStatuses.length; i++) {
+    for (var i = 0; i < healthStatuses.length; i++) {
       this.updateHealth(healthStatuses[i].success, healthStatuses[i].url, healthStatuses[i].timestamp);
       var tooltipOpen = this.state.tooltipOpen;
       tooltipOpen.push(false);
-      this.setState({tooltipOpen});
+      this.setState({ tooltipOpen });
     }
   }
 
   componentDidMount = () => {
     const hubConnection = new HubConnectionBuilder().withUrl('/healthhub').build();
-    this.setState({hubConnection}, () => {
+    this.setState({ hubConnection }, () => {
       this.state.hubConnection
         .start()
         .then(() => console.log('connection started'))
@@ -57,8 +57,8 @@ export class Home extends Component {
   setTooltipOpen = (open, index) => {
     var tooltipOpen = this.state.tooltipOpen;
     tooltipOpen[index] = open
-    this.setState({tooltipOpen});
-  } 
+    this.setState({ tooltipOpen });
+  }
 
   updateHealth = (success, url, timestamp) => {
     var exists = false
@@ -67,34 +67,34 @@ export class Home extends Component {
       if (healthStatuses[i].url === url) {
         healthStatuses[i] = {
           url: url,
-          success: success, 
+          success: success,
           timestamp: timestamp
         };
         exists = true;
       }
     }
     if (!exists) {
-      healthStatuses.push({url: url, success: success, timestamp: timestamp});
+      healthStatuses.push({ url: url, success: success, timestamp: timestamp });
     }
 
     this.setState(healthStatuses);
   }
 
-  render () {
+  render() {
     return (
       <div>
         <AllOperational health={this.state.healthStatuses}></AllOperational>
-        <ul style={{paddingInlineStart: 0}}>
-        {this.state.healthStatuses.map((health, index) => 
-          <li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
-            <span>{health.url}
-            <FontAwesomeIcon style={{marginLeft: 5 + 'px'}}icon={faInfoCircle} id={"TooltipExample" + index}></FontAwesomeIcon>
-            <Tooltip placement="right" isOpen={this.state.tooltipOpen[index]} target={"TooltipExample" + index} toggle={() => this.toggle(index)}>
-              Last update: {moment.utc(health.timestamp).local().format('YYYY-MM-DD HH:mm')}
-            </Tooltip>
-            </span>
-            <EndpointOperational success={health.success}></EndpointOperational>
-          </li>
+        <ul style={{ paddingInlineStart: 0 }}>
+          {this.state.healthStatuses.map((health, index) =>
+            <li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
+              <span>{health.url}
+                <FontAwesomeIcon style={{ marginLeft: 5 + 'px' }} icon={faInfoCircle} id={"TooltipExample" + index}></FontAwesomeIcon>
+                <Tooltip placement="right" isOpen={this.state.tooltipOpen[index]} target={"TooltipExample" + index} toggle={() => this.toggle(index)}>
+                  Last update: {moment.utc(health.timestamp).local().format('YYYY-MM-DD HH:mm')}
+                </Tooltip>
+              </span>
+              <EndpointOperational success={health.success}></EndpointOperational>
+            </li>
           )}
         </ul>
       </div>
@@ -119,13 +119,12 @@ function AllOperational(props) {
     }
   }
 
-  if (props.health.length > 0)
-  {
+  if (props.health.length > 0) {
     if (operational === true) {
       return <div className="alert alert-success" role="alert">All systems operational!</div>
     } else {
       return <div className="alert alert-danger" role="alert">One or more of the systems are experiencing issues</div>
-  
+
     }
   } else {
     return <div></div>

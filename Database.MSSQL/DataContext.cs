@@ -25,7 +25,6 @@ namespace Database.MSSQL
         {
             var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
             optionsBuilder.UseSqlServer("Data Source=localhost,1433;Initial Catalog=areyouok;User Id=sa;Password=password123;");
-            optionsBuilder.UseSnakeCaseNamingConvention();
 
             return new DataContext(optionsBuilder.Options);
         }
