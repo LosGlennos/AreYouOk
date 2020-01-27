@@ -27,7 +27,7 @@ export class Home extends Component {
   }
 
   async fetchLatestStatus() {
-    const response = await fetch('health/latest');
+    const response = await fetch('api/health/latest');
     const healthStatuses = await response.json();
     for (var i = 0; i < healthStatuses.length; i++) {
       this.updateHealth(healthStatuses[i].success, healthStatuses[i].url, healthStatuses[i].timestamp);

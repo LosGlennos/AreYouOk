@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input } from 'reactstrap';
-import { parseConfigFileTextToJson } from 'typescript';
 
 export class Endpoints extends Component {
   static displayName = Endpoints.name;
@@ -23,7 +22,7 @@ export class Endpoints extends Component {
   }
 
   async fetchEndpoints() {
-    const response = await fetch('endpoints');
+    const response = await fetch('api/endpoints');
     const endpoints = await response.json();
     this.setState({ endpoints: endpoints });
   }
