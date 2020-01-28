@@ -15,7 +15,7 @@ namespace Database.PostgreSQL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HealthModel>().HasKey(h => h.Timestamp);
-            modelBuilder.Entity<EndpointModel>().HasNoKey();
+            modelBuilder.Entity<EndpointModel>().HasKey(e => e.Endpoint);
         }
     }
 

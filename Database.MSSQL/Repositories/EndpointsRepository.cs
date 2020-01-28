@@ -27,5 +27,11 @@ namespace Database.MSSQL.Repositories
             return _dataContext.Endpoints.Select(x => x.Endpoint).ToList();
         }
 
+        public async Task DeleteEndpoint(string endpoint)
+        {
+            var endpointToRemove = _dataContext.Endpoints.Single(e => e.Endpoint == endpoint);
+            _dataContext.Endpoints.Remove(endpointToRemove);
+            await _dataContext.SaveChangesAsync();
+        }
     }
 }

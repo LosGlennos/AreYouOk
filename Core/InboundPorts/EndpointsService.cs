@@ -21,5 +21,10 @@ namespace Core.InboundPorts
         public List<string> GetEndpoints() {
             return _endpointsRepository.GetEndpoints();
         }
+
+        public async Task RemoveEndpoint(string endpoint)
+        {
+            await _endpointsRepository.DeleteEndpoint(endpoint);
+        }
     }
 }

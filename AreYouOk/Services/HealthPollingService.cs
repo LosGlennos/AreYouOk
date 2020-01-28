@@ -27,13 +27,13 @@ namespace AreYouOk.Services
         }
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            await Task.Delay(1000);
+            await Task.Delay(10000);
             using var scope = _services.CreateScope();
             var endpointsService = scope.ServiceProvider.GetRequiredService<EndpointsService>();
-            var urls = endpointsService.GetEndpoints();
             var waitTime = Convert.ToInt32(_configuration["HEALTH_POLL_RATE_SECONDS"]);
             while (!cancellationToken.IsCancellationRequested)
             {
+                var urls = endpointsService.GetEndpoints();
                 foreach (var url in urls)
                 {
                     await PingService(scope, url);

@@ -87,11 +87,11 @@ export class Home extends Component {
         <ul style={{ paddingInlineStart: 0 }}>
           {this.state.healthStatuses.map((health, index) =>
             <li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
-              <span>{health.url}
-                <FontAwesomeIcon style={{ marginLeft: 5 + 'px' }} icon={faInfoCircle} id={"TooltipExample" + index}></FontAwesomeIcon>
+              <span><FontAwesomeIcon style={{ marginRight: 5 + 'px' }} icon={faInfoCircle} id={"TooltipExample" + index}></FontAwesomeIcon>
                 <Tooltip placement="right" isOpen={this.state.tooltipOpen[index]} target={"TooltipExample" + index} toggle={() => this.toggle(index)}>
                   Last update: {moment.utc(health.timestamp).local().format('YYYY-MM-DD HH:mm')}
                 </Tooltip>
+                {health.url}
               </span>
               <EndpointOperational success={health.success}></EndpointOperational>
             </li>

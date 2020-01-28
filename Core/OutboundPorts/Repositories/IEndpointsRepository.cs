@@ -7,5 +7,6 @@ namespace Core.OutboundPorts.Repositories
     {
         Task AddEndpoint(string endpoint);
         List<string> GetEndpoints();
+        Task DeleteEndpoint(string endpoint);
     }
 }

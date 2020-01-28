@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Core.InboundPorts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,9 +23,22 @@ namespace AreYouOk.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddEnpoint()
+        public async Task<IActionResult> AddEndpoint(EndpointDto endpoint)
         {
+            await _endpointsService.AddEndpoint(endpoint.Endpoint);
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveEndpoint(EndpointDto endpoint)
+        {
+            await _endpointsService.RemoveEndpoint(endpoint.Endpoint);
+            return Ok();
+        }
+    }
+
+    public class EndpointDto
+    {
+        public string Endpoint { get; set; }
     }
 }

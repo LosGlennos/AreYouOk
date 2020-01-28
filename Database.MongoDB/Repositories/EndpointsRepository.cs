@@ -28,5 +28,10 @@ namespace Database.MongoDB.Repositories
 
             return endpoints.Select(endpoint => endpoint.Endpoint).ToList();
         }
+
+        public async Task DeleteEndpoint(string endpoint)
+        {
+            await _context.EndpointCollection.DeleteOneAsync(e => e.Endpoint == endpoint);
+        }
     }
 }
