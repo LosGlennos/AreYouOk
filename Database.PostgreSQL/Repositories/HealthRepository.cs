@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Core.OutboundPorts.Repositories;
 using Database.PostgreSQL.Models;
 
-namespace Database.PostgreSQL
+namespace Database.PostgreSQL.Repositories
 {
     public class HealthRepository : IHealthRepository
     {

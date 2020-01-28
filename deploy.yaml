@@ -24,8 +24,6 @@ spec:
           value: "postgres"
         - name: DB_CONNECTION_STRING
           value: "User ID=postgres;Password=postgres;Host=postgresql;Port=5432;Database=areyouok;"
-        - name: HEALTH_ENDPOINTS
-          value: "endpoint1 endpoint2"
         - name: DATA_RETENTION_DAYS
           value: "30"
 ---

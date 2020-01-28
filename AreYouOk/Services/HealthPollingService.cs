@@ -27,23 +27,24 @@ namespace AreYouOk.Services
         }
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            var urls = _configuration["HEALTH_ENDPOINTS"].Split(' ');
+            await Task.Delay(10000);
+            using var scope = _services.CreateScope();
+            var endpointsService = scope.ServiceProvider.GetRequiredService<EndpointsService>();
             var waitTime = Convert.ToInt32(_configuration["HEALTH_POLL_RATE_SECONDS"]);
             while (!cancellationToken.IsCancellationRequested)
             {
+                var urls = endpointsService.GetEndpoints();
                 foreach (var url in urls)
                 {
-                    await PingService(url);
+                    await PingService(scope, url);
                 }
 
                 await Task.Delay(waitTime * 1000);
             }
         }
 
-        public async Task PingService(string url)
+        public async Task PingService(IServiceScope scope, string url)
         {
-            using var scope = _services.CreateScope();
-
             try
             {
                 var service = scope.ServiceProvider.GetRequiredService<HealthService>();

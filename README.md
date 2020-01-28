@@ -23,7 +23,6 @@ The application supports MSSQL, MongoDB and PostgreSQL. If any other Database pr
 |HEALTH_POLL_RATE_SECONDS| The rate at which you want to poll the health endpoint, in seconds| "60"|
 |DB_PROVIDER|The database provider| "mssql"/"postgres"/"mongodb"|
 |DB_CONNECTION_STRING| The connection string to your database.| "http://localhost:2017/areyouok"|
-|HEALTH_ENDPOINTS| The health endpoints that you want to poll. Separated by space. | "http://service1.example.com/health http://service2.example.com/health" |
 |DATA_RETENTION_DAYS| The number of days you want to keep your poll logs. | "30"|
 
 There is a very slim yaml file which you can use to get going. Looks like this:
@@ -55,8 +54,6 @@ spec:
           value: "mongodb"
         - name: DB_CONNECTION_STRING
           value: "mongodb://localhost:27017/areyouok"
-        - name: HEALTH_ENDPOINTS
-          value: "{YourEndpoint1} {YourEndpoint2} {YourEndpoint3}"
         - name: DATA_RETENTION_DAYS
           value: "30"
 ---

@@ -8,6 +8,16 @@ namespace Database.MSSQL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Endpoints",
+                columns: table => new
+                {
+                    Endpoint = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HealthData",
                 columns: table => new
                 {
@@ -19,12 +29,15 @@ namespace Database.MSSQL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_health_data", x => x.Timestamp);
+                    table.PrimaryKey("PK_HealthData", x => x.Timestamp);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Endpoints");
+
             migrationBuilder.DropTable(
                 name: "HealthData");
         }

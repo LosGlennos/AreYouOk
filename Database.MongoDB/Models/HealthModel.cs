@@ -3,7 +3,7 @@ using MongoDB.Bson;
 
 namespace Database.MongoDB.Models
 {
-    public class MongoHealthModel
+    public class HealthModel
     {
         public ObjectId Id { get; set; }
         public bool Success { get; set; }

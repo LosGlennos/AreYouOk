@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Core.OutboundPorts.Repositories;
 using Database.MSSQL.Models;
 
-namespace Database.MSSQL
+namespace Database.MSSQL.Repositories
 {
     public class HealthRepository : IHealthRepository
     {
